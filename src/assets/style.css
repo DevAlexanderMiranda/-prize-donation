@@ -116,10 +116,11 @@ form {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding: 0 50px;
+  padding: 0 30px;
   height: 100%;
   text-align: center;
   width: 100%;
+  overflow-y: auto;
 }
 
 h1 {
@@ -128,44 +129,13 @@ h1 {
   color: #333;
 }
 
-.social-icons {
-  display: flex;
-  justify-content: center;
-  margin: 15px 0;
-}
-
-.social-icons a {
-  border: 1px solid #ddd;
-  border-radius: 50%;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 5px;
-  height: 40px;
-  width: 40px;
-  color: #333;
-  text-decoration: none;
-  transition: all 0.3s ease;
-}
-
-.social-icons a:hover {
-  border-color: #6c63ff;
-  color: #6c63ff;
-  transform: translateY(-3px);
-}
-
-span {
-  font-size: 14px;
-  margin-bottom: 20px;
-  color: #777;
-}
-
 input {
   background-color: #f5f5f5;
   border: none;
   padding: 12px 15px;
   margin: 8px 0;
   width: 100%;
+  max-width: 320px;
   border-radius: 8px;
   outline: none;
   transition: all 0.3s ease;
@@ -174,6 +144,35 @@ input {
 input:focus {
   background-color: #fff;
   box-shadow: 0 0 0 2px #6c63ff;
+}
+
+/* Estilos para o campo de senha com ícone */
+.password-field {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  margin: 8px 0;
+}
+
+.password-field input {
+  margin: 0;
+  padding-right: 40px; /* Espaço para o ícone */
+  width: 100%;
+  max-width: 100%;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #777;
+  transition: color 0.3s ease;
+}
+
+.toggle-password:hover {
+  color: #6c63ff;
 }
 
 button {
@@ -313,7 +312,33 @@ button:active {
   color: #5a54d1;
 }
 
-/* Removendo a propriedade hidden mas mantendo os botões com a mesma aparência */
+/* Links de navegação para dispositivos móveis */
+.mobile-signup,
+.mobile-signin {
+  display: none;
+  margin-top: 20px;
+}
+
+.mobile-signup p,
+.mobile-signin p {
+  font-size: 14px;
+  color: #777;
+}
+
+.mobile-signup a,
+.mobile-signin a {
+  color: #6c63ff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.mobile-signup a:hover,
+.mobile-signin a:hover {
+  text-decoration: underline;
+}
+
+/* Removendo a classe hidden dos botões para garantir que sejam visíveis */
 .hidden {
   display: inline-block;
 }
@@ -361,7 +386,25 @@ button:active {
     padding: 0 20px;
   }
 
+  input,
+  .password-field {
+    max-width: 280px;
+  }
+
   .back-to-login {
     margin-top: 15px;
+  }
+
+  /* Mostrar links de navegação APENAS em dispositivos móveis */
+  .mobile-signup,
+  .mobile-signin {
+    display: block;
+  }
+
+  /* Garantir que o link de voltar para login seja sempre visível no cadastro em mobile */
+  .container.active .mobile-signin {
+    display: block;
+    margin-top: 20px;
+    z-index: 10;
   }
 }
