@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Prize Donation - PMP</title>
     <script defer src="../-prize-donation/src/js/firebase-config.js"></script>
-    <script src="../-prize-donation/src/js/script.js"></script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -120,5 +119,40 @@
         </div>
       </div>
     </div>
+
+    <script>
+      const container = document.getElementById("container");
+
+      function showSignUp() {
+        container.classList.add("active");
+        container.classList.remove("forgot");
+      }
+
+      function showSignIn() {
+        container.classList.remove("active");
+        container.classList.remove("forgot");
+      }
+
+      function showForgotPassword() {
+        container.classList.add("forgot");
+        container.classList.remove("active");
+      }
+
+      // Função para alternar visibilidade da senha
+      function togglePassword(inputId) {
+        const passwordInput = document.getElementById(inputId);
+        const icon = event.target;
+
+        if (passwordInput.type === "password") {
+          passwordInput.type = "text";
+          icon.classList.remove("fa-eye-slash");
+          icon.classList.add("fa-eye");
+        } else {
+          passwordInput.type = "password";
+          icon.classList.remove("fa-eye");
+          icon.classList.add("fa-eye-slash");
+        }
+      }
+    </script>
   </body>
 </html>
