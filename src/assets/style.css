@@ -175,6 +175,17 @@ input:focus {
   color: #6c63ff;
 }
 
+/*Mensagem de erro confirmar senha*/
+.error-message {
+  color: #e74c3c;
+  font-size: 14px;
+  margin: 5px 0;
+  min-height: 20px;
+  width: 100%;
+  max-width: 320px;
+  text-align: left;
+}
+
 button {
   border-radius: 25px;
   border: none;
@@ -387,7 +398,8 @@ button:active {
   }
 
   input,
-  .password-field {
+  .password-field,
+  .error-message {
     max-width: 280px;
   }
 
