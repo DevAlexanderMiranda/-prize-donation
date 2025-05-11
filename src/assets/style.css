@@ -51,48 +51,10 @@ body {
   z-index: 2;
 }
 
-.sign-up {
-  left: 0;
-  opacity: 0;
-  z-index: 1;
-}
-
 .forgot-pass {
   left: 0;
   opacity: 0;
   z-index: 1;
-}
-
-/* Estado quando "active" class é adicionada - Cadastro visível */
-.container.active .sign-in {
-  transform: translateX(100%);
-  opacity: 0;
-  z-index: 1;
-}
-
-.container.active .sign-up {
-  transform: translateX(100%);
-  opacity: 1;
-  z-index: 5;
-}
-
-.container.active .toggle-container {
-  transform: translateX(-100%);
-  border-radius: 0 30px 30px 0;
-}
-
-.container.active .toggle {
-  transform: translateX(50%);
-}
-
-.container.active .toggle-left {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.container.active .toggle-right {
-  opacity: 0;
-  transform: translateX(20%);
 }
 
 /* Estado quando "forgot" class é adicionada - Esqueci Senha visível */
@@ -104,10 +66,6 @@ body {
 .container.forgot .forgot-pass {
   opacity: 1;
   z-index: 5;
-}
-
-.container.forgot .toggle-container {
-  opacity: 0.8;
 }
 
 form {
@@ -135,7 +93,7 @@ input {
   padding: 12px 15px;
   margin: 8px 0;
   width: 100%;
-  max-width: 320px;
+  max-width: 400px;
   border-radius: 8px;
   outline: none;
   transition: all 0.3s ease;
@@ -150,7 +108,7 @@ input:focus {
 .password-field {
   position: relative;
   width: 100%;
-  max-width: 320px;
+  max-width: 400px;
   margin: 8px 0;
 }
 
@@ -173,17 +131,6 @@ input:focus {
 
 .toggle-password:hover {
   color: #6c63ff;
-}
-
-/*Mensagem de erro confirmar senha*/
-.error-message {
-  color: #e74c3c;
-  font-size: 14px;
-  margin: 5px 0;
-  min-height: 20px;
-  width: 100%;
-  max-width: 320px;
-  text-align: left;
 }
 
 button {
@@ -212,6 +159,33 @@ button:active {
   box-shadow: 0 5px 10px rgba(108, 99, 255, 0.4);
 }
 
+/* Estilos para o botão quando está carregando */
+button.loading {
+  background: linear-gradient(45deg, #8983ff, #7a75ea);
+  cursor: not-allowed;
+  opacity: 0.9;
+  transform: none;
+}
+
+button.loading:hover {
+  transform: none;
+  box-shadow: 0 5px 15px rgba(108, 99, 255, 0.3);
+}
+
+button.loading i {
+  margin-left: 8px;
+  animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .forgot-password {
   color: #6c63ff;
   font-size: 14px;
@@ -222,6 +196,27 @@ button:active {
 
 .forgot-password:hover {
   text-decoration: underline;
+}
+
+.recover-text {
+  color: #777;
+  margin-bottom: 20px;
+  font-size: 15px;
+}
+
+.back-to-login {
+  margin-top: 25px;
+}
+
+.back-to-login a {
+  color: #6c63ff;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-size: 14px;
+}
+
+.back-to-login a:hover {
+  color: #5a54d1;
 }
 
 .toggle-container {
@@ -260,12 +255,6 @@ button:active {
   transition: all 0.6s ease-in-out;
 }
 
-.toggle-left {
-  transform: translateX(0);
-  opacity: 0;
-  left: 0;
-}
-
 .toggle-right {
   right: 0;
   transform: translateX(0);
@@ -274,84 +263,15 @@ button:active {
 
 .toggle-panel h1 {
   color: #fff;
+  font-size: 32px;
+  margin-bottom: 20px;
 }
 
 .toggle-panel p {
   font-size: 16px;
-  margin: 20px 0 30px;
+  margin: 20px 0;
   color: #fff;
-}
-
-.toggle-panel button {
-  background-color: transparent;
-  border: 2px solid #fff;
-  border-radius: 25px;
-  color: #fff;
-  font-size: 16px;
-  font-weight: 500;
-  padding: 10px 30px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.toggle-panel button:hover {
-  background-color: #fff;
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.3);
-}
-
-.recover-text {
-  color: #777;
-  margin-bottom: 20px;
-  font-size: 15px;
-}
-
-.back-to-login {
-  margin-top: 25px;
-}
-
-.back-to-login a {
-  color: #6c63ff;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  font-size: 14px;
-}
-
-.back-to-login a:hover {
-  color: #5a54d1;
-}
-
-/* Links de navegação para dispositivos móveis */
-.mobile-signup,
-.mobile-signin {
-  display: none;
-  margin-top: 20px;
-}
-
-.mobile-signup p,
-.mobile-signin p {
-  font-size: 14px;
-  color: #777;
-}
-
-.mobile-signup a,
-.mobile-signin a {
-  color: #6c63ff;
-  text-decoration: none;
-  font-weight: 500;
-  transition: all 0.3s ease;
-}
-
-.mobile-signup a:hover,
-.mobile-signin a:hover {
-  text-decoration: underline;
-}
-
-/* Removendo a classe hidden dos botões para garantir que sejam visíveis */
-.hidden {
-  display: inline-block;
+  line-height: 1.6;
 }
 
 @media (max-width: 768px) {
@@ -370,7 +290,6 @@ button:active {
   }
 
   .sign-in,
-  .sign-up,
   .forgot-pass {
     opacity: 0;
     width: 100%;
@@ -380,12 +299,6 @@ button:active {
   .sign-in {
     opacity: 1;
     z-index: 2;
-  }
-
-  .container.active .sign-up {
-    opacity: 1;
-    z-index: 5;
-    transform: translateX(0);
   }
 
   .container.forgot .forgot-pass {
@@ -398,25 +311,140 @@ button:active {
   }
 
   input,
-  .password-field,
-  .error-message {
-    max-width: 280px;
+  .password-field {
+    max-width: 320px;
   }
 
   .back-to-login {
     margin-top: 15px;
   }
+}
 
-  /* Mostrar links de navegação APENAS em dispositivos móveis */
-  .mobile-signup,
-  .mobile-signin {
-    display: block;
-  }
-
-  /* Garantir que o link de voltar para login seja sempre visível no cadastro em mobile */
-  .container.active .mobile-signin {
-    display: block;
+/* Estilos para a página de gerenciamento de usuários */
+.users-list {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
     margin-top: 20px;
-    z-index: 10;
-  }
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.users-list table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.users-list th,
+.users-list td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.users-list th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+}
+
+.users-list tr:hover {
+    background-color: #f8f9fa;
+}
+
+.btn-edit,
+.btn-delete {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    margin: 0 5px;
+}
+
+.btn-edit i {
+    color: #007bff;
+}
+
+.btn-delete i {
+    color: #dc3545;
+}
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: white;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 500px;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.form-group small {
+    display: block;
+    color: #666;
+    margin-top: 5px;
+}
+
+/* Header com botão de adicionar */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    margin: 0;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
 }
