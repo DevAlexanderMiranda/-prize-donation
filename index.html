@@ -9,9 +9,9 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <link rel="stylesheet" href="/src/assets/style.css" />
+    <link rel="stylesheet" href="./src/assets/style.css" />
 
-    <script defer type="module" src="/src/js/firebase-config.js"></script>
+    <script defer type="module" src="./src/js/firebase-config.js"></script>
   </head>
   <body>
     <div class="container" id="container">
@@ -21,7 +21,13 @@
           <h1>Entrar</h1>
           <input type="email" id="loginEmail" placeholder="Email" required />
           <div class="password-field">
-            <input type="password" placeholder="Senha" id="password" autocomplete="current-password" required />
+            <input
+              type="password"
+              placeholder="Senha"
+              id="password"
+              autocomplete="current-password"
+              required
+            />
             <i
               class="fas fa-eye-slash toggle-password"
               onclick="togglePassword('password')"
@@ -58,7 +64,8 @@
           <div class="toggle-panel toggle-right">
             <h1>Olá, Amigo!</h1>
             <p>
-              Bem-vindo ao sistema de doação de prêmios. Faça login para acessar todas as funcionalidades.
+              Bem-vindo ao sistema de doação de prêmios. Faça login para acessar
+              todas as funcionalidades.
             </p>
           </div>
         </div>
@@ -96,20 +103,21 @@
 
       // Adicionar animação ao botão de login
       if (loginForm) {
-        loginForm.addEventListener("submit", function(event) {
+        loginForm.addEventListener("submit", function (event) {
           event.preventDefault();
-          
+
           // Alterar texto do botão e adicionar classe de loading
-          loginButton.innerHTML = 'Entrando... <i class="fas fa-spinner fa-spin"></i>';
+          loginButton.innerHTML =
+            'Entrando... <i class="fas fa-spinner fa-spin"></i>';
           loginButton.classList.add("loading");
           loginButton.disabled = true;
-          
+
           // Simulação de login - em um caso real, isso seria substituído pelo código de autenticação
           setTimeout(() => {
             // Aqui você faria a chamada de autenticação real
             // Se for bem-sucedido, redireciona para a página principal
             // Por enquanto, apenas restauramos o botão após 2 segundos
-            loginButton.innerHTML = 'Entrar';
+            loginButton.innerHTML = "Entrar";
             loginButton.classList.remove("loading");
             loginButton.disabled = false;
           }, 2000);
