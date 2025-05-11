@@ -1,168 +1,244 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cadastro de Prêmios - ASM Donation</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/src/assets/cadastro-premio.css">
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../src/assets/cadastro-premio.css" />
+  </head>
+  <body>
     <div class="toast-container" id="toast-container"></div>
     <div class="container">
-        <header>
-            <h1>ASM Donation</h1>
-            <div class="user-info">
-                <div class="avatar">U</div>
-                <div class="user-dropdown">
-                    <span id="user-name">Usuário</span>
-                    <div class="dropdown">
-                        <button class="dropdown-toggle">
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <div class="dropdown-menu">
-                            <a href="#" class="dropdown-item nav-item" data-page="dashboard.html">
-                                <i class="fas fa-tachometer-alt"></i> Dashboard
-                            </a>
-                            <a href="#" class="dropdown-item nav-item" data-page="cadastro-premio.html">
-                                <i class="fas fa-trophy"></i> Cadastrar Prêmio
-                            </a>
-                            <a href="#" class="dropdown-item nav-item" data-page="gerenciar-dados.html">
-                                <i class="fas fa-cog"></i> Gerenciar Dados
-                            </a>
-                            <a href="#" class="dropdown-item nav-item" data-page="gerenciar-usuarios.html">
-                                <i class="fas fa-users"></i> Gerenciar Usuários
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <button class="dropdown-item logout-btn" id="logout-btn">
-                                <i class="fas fa-sign-out-alt"></i> Sair
-                            </button>
-                        </div>
-                    </div>
-                </div>
+      <header>
+        <h1>ASM Donation</h1>
+        <div class="user-info">
+          <div class="avatar">U</div>
+          <div class="user-dropdown">
+            <span id="user-name">Usuário</span>
+            <div class="dropdown">
+              <button class="dropdown-toggle">
+                <i class="fas fa-chevron-down"></i>
+              </button>
+              <div class="dropdown-menu">
+                <a
+                  href="#"
+                  class="dropdown-item nav-item"
+                  data-page="dashboard.html"
+                >
+                  <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+                <a
+                  href="#"
+                  class="dropdown-item nav-item"
+                  data-page="cadastro-premio.html"
+                >
+                  <i class="fas fa-trophy"></i> Cadastrar Prêmio
+                </a>
+                <a
+                  href="#"
+                  class="dropdown-item nav-item"
+                  data-page="gerenciar-dados.html"
+                >
+                  <i class="fas fa-cog"></i> Gerenciar Dados
+                </a>
+                <a
+                  href="#"
+                  class="dropdown-item nav-item"
+                  data-page="gerenciar-usuarios.html"
+                >
+                  <i class="fas fa-users"></i> Gerenciar Usuários
+                </a>
+                <div class="dropdown-divider"></div>
+                <button class="dropdown-item logout-btn" id="logout-btn">
+                  <i class="fas fa-sign-out-alt"></i> Sair
+                </button>
+              </div>
             </div>
-        </header>
-        
-        <div class="form-container">
-            <h2 class="form-title">Cadastro de Prêmio</h2>
-            
-            <form id="premio-form">
-                <div class="form-group">
-                    <label for="colaborador">Colaborador</label>
-                    <input type="text" id="colaborador" name="colaborador" placeholder="Nome do colaborador" required>
-                </div>
-                
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="premio">Prêmio</label>
-                            <div class="select-container">
-                                <select id="premio" name="premio" required>
-                                    <option value="" disabled selected>Selecione um prêmio</option>
-                                    <!-- Opções serão carregadas dinamicamente -->
-                                </select>
-                                <button type="button" class="add-option-btn" id="add-premio-btn" title="Adicionar novo prêmio">
-                                    <i class="fas fa-plus-circle"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="quantidade">Quantidade</label>
-                            <input type="number" id="quantidade" name="quantidade" min="1" value="1" required>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="secretaria">Secretaria/Empresa</label>
-                    <div class="select-container">
-                        <select id="secretaria" name="secretaria" required>
-                            <option value="" disabled selected>Selecione uma secretaria/empresa</option>
-                            <!-- Opções serão carregadas dinamicamente -->
-                        </select>
-                        <button type="button" class="add-option-btn" id="add-secretaria-btn" title="Adicionar nova secretaria/empresa">
-                            <i class="fas fa-plus-circle"></i>
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="data">Data</label>
-                            <input type="date" id="data" name="data" required>
-                            <small style="display: block; color: #666; margin-top: 5px;">Selecione a data da doação</small>
-                        </div>
-                    </div>
-                    
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="nota-fiscal">Nº Nota Fiscal</label>
-                            <input type="text" id="nota-fiscal" name="nota-fiscal" placeholder="Número da nota fiscal">
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="observacoes">Observações</label>
-                    <textarea id="observacoes" name="observacoes" rows="4" placeholder="Informações adicionais sobre o prêmio"></textarea>
-                </div>
-                
-                <button type="submit" class="submit-btn">Cadastrar Prêmio</button>
-            </form>
+          </div>
         </div>
+      </header>
+
+      <div class="form-container">
+        <h2 class="form-title">Cadastro de Prêmio</h2>
+
+        <form id="premio-form">
+          <div class="form-group">
+            <label for="colaborador">Colaborador</label>
+            <input
+              type="text"
+              id="colaborador"
+              name="colaborador"
+              placeholder="Nome do colaborador"
+              required
+            />
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label for="premio">Prêmio</label>
+                <div class="select-container">
+                  <select id="premio" name="premio" required>
+                    <option value="" disabled selected>
+                      Selecione um prêmio
+                    </option>
+                    <!-- Opções serão carregadas dinamicamente -->
+                  </select>
+                  <button
+                    type="button"
+                    class="add-option-btn"
+                    id="add-premio-btn"
+                    title="Adicionar novo prêmio"
+                  >
+                    <i class="fas fa-plus-circle"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="form-group">
+                <label for="quantidade">Quantidade</label>
+                <input
+                  type="number"
+                  id="quantidade"
+                  name="quantidade"
+                  min="1"
+                  value="1"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="secretaria">Secretaria/Empresa</label>
+            <div class="select-container">
+              <select id="secretaria" name="secretaria" required>
+                <option value="" disabled selected>
+                  Selecione uma secretaria/empresa
+                </option>
+                <!-- Opções serão carregadas dinamicamente -->
+              </select>
+              <button
+                type="button"
+                class="add-option-btn"
+                id="add-secretaria-btn"
+                title="Adicionar nova secretaria/empresa"
+              >
+                <i class="fas fa-plus-circle"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <div class="form-group">
+                <label for="data">Data</label>
+                <input type="date" id="data" name="data" required />
+                <small style="display: block; color: #666; margin-top: 5px"
+                  >Selecione a data da doação</small
+                >
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="form-group">
+                <label for="nota-fiscal">Nº Nota Fiscal</label>
+                <input
+                  type="text"
+                  id="nota-fiscal"
+                  name="nota-fiscal"
+                  placeholder="Número da nota fiscal"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="observacoes">Observações</label>
+            <textarea
+              id="observacoes"
+              name="observacoes"
+              rows="4"
+              placeholder="Informações adicionais sobre o prêmio"
+            ></textarea>
+          </div>
+
+          <button type="submit" class="submit-btn">Cadastrar Prêmio</button>
+        </form>
+      </div>
     </div>
-    
+
     <!-- Modal para adicionar novo prêmio -->
     <div class="modal" id="premio-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Adicionar Novo Prêmio</h3>
-                <button class="close-modal" id="close-premio-modal">&times;</button>
-            </div>
-            <div class="form-group">
-                <label for="novo-premio">Nome do Prêmio</label>
-                <input type="text" id="novo-premio" placeholder="Digite o nome do prêmio">
-            </div>
-            <div class="form-group">
-                <label for="novo-premio-categoria">Categoria</label>
-                <select id="novo-premio-categoria" required>
-                    <option value="" disabled selected>Selecione uma categoria</option>
-                    <option value="diamante">Diamante</option>
-                    <option value="ouro">Ouro</option>
-                    <option value="prata">Prata</option>
-                    <option value="bronze">Bronze</option>
-                    <option value="brinde">Brinde</option>
-                </select>
-            </div>
-            <div class="modal-footer">
-                <button class="modal-btn cancel-btn" id="cancel-premio-btn">Cancelar</button>
-                <button class="modal-btn add-btn" id="confirm-premio-btn">Adicionar</button>
-            </div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Adicionar Novo Prêmio</h3>
+          <button class="close-modal" id="close-premio-modal">&times;</button>
         </div>
+        <div class="form-group">
+          <label for="novo-premio">Nome do Prêmio</label>
+          <input
+            type="text"
+            id="novo-premio"
+            placeholder="Digite o nome do prêmio"
+          />
+        </div>
+        <div class="form-group">
+          <label for="novo-premio-categoria">Categoria</label>
+          <select id="novo-premio-categoria" required>
+            <option value="" disabled selected>Selecione uma categoria</option>
+            <option value="diamante">Diamante</option>
+            <option value="ouro">Ouro</option>
+            <option value="prata">Prata</option>
+            <option value="bronze">Bronze</option>
+            <option value="brinde">Brinde</option>
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button class="modal-btn cancel-btn" id="cancel-premio-btn">
+            Cancelar
+          </button>
+          <button class="modal-btn add-btn" id="confirm-premio-btn">
+            Adicionar
+          </button>
+        </div>
+      </div>
     </div>
-    
+
     <!-- Modal para adicionar nova secretaria/empresa -->
     <div class="modal" id="secretaria-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Adicionar Nova Secretaria/Empresa</h3>
-                <button class="close-modal" id="close-secretaria-modal">&times;</button>
-            </div>
-            <div class="form-group">
-                <label for="nova-secretaria">Nome da Secretaria/Empresa</label>
-                <input type="text" id="nova-secretaria" placeholder="Digite o nome da secretaria ou empresa">
-            </div>
-            <div class="modal-footer">
-                <button class="modal-btn cancel-btn" id="cancel-secretaria-btn">Cancelar</button>
-                <button class="modal-btn add-btn" id="confirm-secretaria-btn">Adicionar</button>
-            </div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Adicionar Nova Secretaria/Empresa</h3>
+          <button class="close-modal" id="close-secretaria-modal">
+            &times;
+          </button>
         </div>
+        <div class="form-group">
+          <label for="nova-secretaria">Nome da Secretaria/Empresa</label>
+          <input
+            type="text"
+            id="nova-secretaria"
+            placeholder="Digite o nome da secretaria ou empresa"
+          />
+        </div>
+        <div class="modal-footer">
+          <button class="modal-btn cancel-btn" id="cancel-secretaria-btn">
+            Cancelar
+          </button>
+          <button class="modal-btn add-btn" id="confirm-secretaria-btn">
+            Adicionar
+          </button>
+        </div>
+      </div>
     </div>
-    
-    <script type="module" src="/src/js/cadastro-premio.js"></script>
-</body>
-</html> 
+
+    <script type="module" src="../src/js/cadastro-premio.js"></script>
+  </body>
+</html>

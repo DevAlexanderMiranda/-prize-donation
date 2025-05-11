@@ -1,141 +1,158 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard - ASM Donation</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <!-- Chart.js para os gráficos -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="/src/assets/dashboard.css">
-</head>
-<body>
+    <link rel="stylesheet" href="../src/assets/dashboard.css" />
+  </head>
+  <body>
     <div class="container">
-        <header>
-            <h1>ASM Donation</h1>
-            <div class="user-info">
-                <div class="avatar">U</div>
-                <div class="user-dropdown">
-                    <span id="user-name">Usuário</span>
-                    <div class="dropdown">
-                        <button class="dropdown-toggle">
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <div class="dropdown-menu">
-                            <a href="#" class="dropdown-item nav-item" data-page="dashboard.html">
-                                <i class="fas fa-tachometer-alt"></i> Dashboard
-                            </a>
-                            <a href="#" class="dropdown-item nav-item" data-page="cadastro-premio.html">
-                                <i class="fas fa-trophy"></i> Cadastrar Prêmio
-                            </a>
-                            <a href="#" class="dropdown-item nav-item" data-page="gerenciar-dados.html">
-                                <i class="fas fa-cog"></i> Gerenciar Dados
-                            </a>
-                            <a href="#" class="dropdown-item nav-item" data-page="gerenciar-usuarios.html">
-                                <i class="fas fa-users"></i> Gerenciar Usuários
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <button class="dropdown-item logout-btn" id="logout-btn">
-                                <i class="fas fa-sign-out-alt"></i> Sair
-                            </button>
-                        </div>
-                    </div>
-                </div>
+      <header>
+        <h1>ASM Donation</h1>
+        <div class="user-info">
+          <div class="avatar">U</div>
+          <div class="user-dropdown">
+            <span id="user-name">Usuário</span>
+            <div class="dropdown">
+              <button class="dropdown-toggle">
+                <i class="fas fa-chevron-down"></i>
+              </button>
+              <div class="dropdown-menu">
+                <a
+                  href="#"
+                  class="dropdown-item nav-item"
+                  data-page="dashboard.html"
+                >
+                  <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+                <a
+                  href="#"
+                  class="dropdown-item nav-item"
+                  data-page="cadastro-premio.html"
+                >
+                  <i class="fas fa-trophy"></i> Cadastrar Prêmio
+                </a>
+                <a
+                  href="#"
+                  class="dropdown-item nav-item"
+                  data-page="gerenciar-dados.html"
+                >
+                  <i class="fas fa-cog"></i> Gerenciar Dados
+                </a>
+                <a
+                  href="#"
+                  class="dropdown-item nav-item"
+                  data-page="gerenciar-usuarios.html"
+                >
+                  <i class="fas fa-users"></i> Gerenciar Usuários
+                </a>
+                <div class="dropdown-divider"></div>
+                <button class="dropdown-item logout-btn" id="logout-btn">
+                  <i class="fas fa-sign-out-alt"></i> Sair
+                </button>
+              </div>
             </div>
-        </header>
-        
-        <h2>Dashboard</h2>
-        
-        <!-- Menu de navegação entre as seções -->
-        <div class="dashboard-nav">
-            <button class="nav-tab active" data-section="premios">
-                <i class="fas fa-trophy"></i> Lista de Prêmios
-            </button>
-            <button class="nav-tab" data-section="secretarias">
-                <i class="fas fa-building"></i> Lista de Secretarias/Empresas
-            </button>
-            <button class="nav-tab" data-section="top-premios">
-                <i class="fas fa-award"></i> Top 5 Prêmios Mais Doados
-            </button>
+          </div>
         </div>
-        
-        <!-- Seção de Lista de Prêmios -->
-        <div class="dashboard-section active" id="section-premios">
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-title">Lista de Prêmios</div>
-                    <div class="card-icon"><i class="fas fa-list"></i></div>
-                </div>
-                <div class="table-responsive">
-                    <table class="data-table" id="lista-premios-table">
-                        <thead>
-                            <tr>
-                                <th>Prêmio</th>
-                                <th>Categoria</th>
-                                <th>Quantidade</th>
-                                <th>Percentual</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Dados serão carregados dinamicamente -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Seção de Lista de Secretarias/Empresas -->
-        <div class="dashboard-section" id="section-secretarias">
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-title">Lista de Secretarias/Empresas</div>
-                    <div class="card-icon"><i class="fas fa-building"></i></div>
-                </div>
-                <div class="table-responsive">
-                    <table class="data-table" id="lista-secretarias-table">
-                        <thead>
-                            <tr>
-                                <th>Secretaria/Empresa</th>
-                                <th>Quantidade de Doações</th>
-                                <th>Total de Prêmios</th>
-                                <th>Percentual</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Dados serão carregados dinamicamente -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Seção de Top 5 Prêmios Mais Doados -->
-        <div class="dashboard-section" id="section-top-premios">
-            <div class="card">
-                <div class="card-header">
-                    <div class="card-title">Top 5 Prêmios Mais Doados</div>
-                    <div class="card-icon"><i class="fas fa-trophy"></i></div>
-                </div>
-                <div class="table-responsive">
-                    <table class="data-table" id="top-premios-table">
-                        <thead>
-                            <tr>
-                                <th>Prêmio</th>
-                                <th>Quantidade</th>
-                                <th>Categoria</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Dados serão carregados dinamicamente -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <script type="module" src="/src/js/dashboard.js"></script>
-        
+      </header>
 
-</body>
-</html> 
+      <h2>Dashboard</h2>
+
+      <!-- Menu de navegação entre as seções -->
+      <div class="dashboard-nav">
+        <button class="nav-tab active" data-section="premios">
+          <i class="fas fa-trophy"></i> Lista de Prêmios
+        </button>
+        <button class="nav-tab" data-section="secretarias">
+          <i class="fas fa-building"></i> Lista de Secretarias/Empresas
+        </button>
+        <button class="nav-tab" data-section="top-premios">
+          <i class="fas fa-award"></i> Top 5 Prêmios Mais Doados
+        </button>
+      </div>
+
+      <!-- Seção de Lista de Prêmios -->
+      <div class="dashboard-section active" id="section-premios">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Lista de Prêmios</div>
+            <div class="card-icon"><i class="fas fa-list"></i></div>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table" id="lista-premios-table">
+              <thead>
+                <tr>
+                  <th>Prêmio</th>
+                  <th>Categoria</th>
+                  <th>Quantidade</th>
+                  <th>Percentual</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Dados serão carregados dinamicamente -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Seção de Lista de Secretarias/Empresas -->
+      <div class="dashboard-section" id="section-secretarias">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Lista de Secretarias/Empresas</div>
+            <div class="card-icon"><i class="fas fa-building"></i></div>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table" id="lista-secretarias-table">
+              <thead>
+                <tr>
+                  <th>Secretaria/Empresa</th>
+                  <th>Quantidade de Doações</th>
+                  <th>Total de Prêmios</th>
+                  <th>Percentual</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Dados serão carregados dinamicamente -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Seção de Top 5 Prêmios Mais Doados -->
+      <div class="dashboard-section" id="section-top-premios">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Top 5 Prêmios Mais Doados</div>
+            <div class="card-icon"><i class="fas fa-trophy"></i></div>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table" id="top-premios-table">
+              <thead>
+                <tr>
+                  <th>Prêmio</th>
+                  <th>Quantidade</th>
+                  <th>Categoria</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Dados serão carregados dinamicamente -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="../src/js/dashboard.js"></script>
+  </body>
+</html>

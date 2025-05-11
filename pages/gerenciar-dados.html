@@ -1,234 +1,292 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gerenciar Dados - ASM Donation</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/src/assets/gerenciar-dados.css">
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../src/assets/gerenciar-dados.css" />
+  </head>
+  <body>
     <div class="container">
-        <header>
-            <h1>ASM Donation</h1>
-            <div class="user-info">
-                <div class="avatar">U</div>
-                <div class="user-dropdown">
-                    <span id="user-name">Usuário</span>
-                    <div class="dropdown">
-                        <button class="dropdown-toggle">
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <div class="dropdown-menu">
-                            <a href="#" class="dropdown-item" data-page="dashboard.html">
-                                <i class="fas fa-tachometer-alt"></i> Dashboard
-                            </a>
-                            <a href="#" class="dropdown-item" data-page="cadastro-premio.html">
-                                <i class="fas fa-trophy"></i> Cadastrar Prêmio
-                            </a>
-                            <a href="#" class="dropdown-item" data-page="gerenciar-dados.html">
-                                <i class="fas fa-cog"></i> Gerenciar Dados
-                            </a>
-                            <a href="#" class="dropdown-item" data-page="gerenciar-usuarios.html">
-                                <i class="fas fa-users"></i> Gerenciar Usuários
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <button class="dropdown-item logout-btn" id="logout-btn">
-                                <i class="fas fa-sign-out-alt"></i> Sair
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
-        
-        <div class="tabs">
-            <div class="tab active" data-tab="doacoes">Doações</div>
-            <div class="tab" data-tab="premios">Prêmios</div>
-            <div class="tab" data-tab="secretarias">Secretarias/Empresas</div>
-        </div>
-        
-        <div id="doacoes-tab" class="tab-content active">
-            <h2>Gerenciar Doações</h2>
-            <div class="search-container">
-                <input type="text" id="pesquisa-doacao" placeholder="Pesquisar por colaborador, prêmio ou secretaria...">
-                <button id="btn-pesquisar-doacao" class="search-btn">
-                    <i class="fas fa-search"></i>
+      <header>
+        <h1>ASM Donation</h1>
+        <div class="user-info">
+          <div class="avatar">U</div>
+          <div class="user-dropdown">
+            <span id="user-name">Usuário</span>
+            <div class="dropdown">
+              <button class="dropdown-toggle">
+                <i class="fas fa-chevron-down"></i>
+              </button>
+              <div class="dropdown-menu">
+                <a href="#" class="dropdown-item" data-page="dashboard.html">
+                  <i class="fas fa-tachometer-alt"></i> Dashboard
+                </a>
+                <a
+                  href="#"
+                  class="dropdown-item"
+                  data-page="cadastro-premio.html"
+                >
+                  <i class="fas fa-trophy"></i> Cadastrar Prêmio
+                </a>
+                <a
+                  href="#"
+                  class="dropdown-item"
+                  data-page="gerenciar-dados.html"
+                >
+                  <i class="fas fa-cog"></i> Gerenciar Dados
+                </a>
+                <a
+                  href="#"
+                  class="dropdown-item"
+                  data-page="gerenciar-usuarios.html"
+                >
+                  <i class="fas fa-users"></i> Gerenciar Usuários
+                </a>
+                <div class="dropdown-divider"></div>
+                <button class="dropdown-item logout-btn" id="logout-btn">
+                  <i class="fas fa-sign-out-alt"></i> Sair
                 </button>
-                <button id="btn-limpar-pesquisa" class="clear-btn">
-                    Limpar
-                </button>
+              </div>
             </div>
-            <div id="doacoes-list">
-                <div class="table-responsive">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Colaborador</th>
-                                <th>Prêmio</th>
-                                <th>Qtd</th>
-                                <th>Secretaria/Empresa</th>
-                                <th>Data</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody id="doacoes-table-body">
-                            <!-- Dados serão carregados dinamicamente -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+          </div>
         </div>
-        
-        <div id="premios-tab" class="tab-content">
-            <h2>Gerenciar Prêmios</h2>
-            <div id="premios-list">
-                <div class="table-responsive">
-                    <table class="data-table" id="premios-table">
-                        <thead>
-                            <tr>
-                                <th>Nome</th>
-                                <th>Categoria</th>
-                                <th>Data de Criação</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody id="premios-table-body">
-                            <!-- Dados serão carregados dinamicamente -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+      </header>
+
+      <div class="tabs">
+        <div class="tab active" data-tab="doacoes">Doações</div>
+        <div class="tab" data-tab="premios">Prêmios</div>
+        <div class="tab" data-tab="secretarias">Secretarias/Empresas</div>
+      </div>
+
+      <div id="doacoes-tab" class="tab-content active">
+        <h2>Gerenciar Doações</h2>
+        <div class="search-container">
+          <input
+            type="text"
+            id="pesquisa-doacao"
+            placeholder="Pesquisar por colaborador, prêmio ou secretaria..."
+          />
+          <button id="btn-pesquisar-doacao" class="search-btn">
+            <i class="fas fa-search"></i>
+          </button>
+          <button id="btn-limpar-pesquisa" class="clear-btn">Limpar</button>
         </div>
-        
-        <div id="secretarias-tab" class="tab-content">
-            <h2>Gerenciar Secretarias/Empresas</h2>
-            <div id="secretarias-list">
-                <div class="table-responsive">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Nome</th>
-                                <th>Data de Criação</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody id="secretarias-table-body">
-                            <!-- Dados serão carregados dinamicamente -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+        <div id="doacoes-list">
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Colaborador</th>
+                  <th>Prêmio</th>
+                  <th>Qtd</th>
+                  <th>Secretaria/Empresa</th>
+                  <th>Data</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="doacoes-table-body">
+                <!-- Dados serão carregados dinamicamente -->
+              </tbody>
+            </table>
+          </div>
         </div>
+      </div>
+
+      <div id="premios-tab" class="tab-content">
+        <h2>Gerenciar Prêmios</h2>
+        <div id="premios-list">
+          <div class="table-responsive">
+            <table class="data-table" id="premios-table">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Categoria</th>
+                  <th>Data de Criação</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="premios-table-body">
+                <!-- Dados serão carregados dinamicamente -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div id="secretarias-tab" class="tab-content">
+        <h2>Gerenciar Secretarias/Empresas</h2>
+        <div id="secretarias-list">
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Data de Criação</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="secretarias-table-body">
+                <!-- Dados serão carregados dinamicamente -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
-    
+
     <!-- Modal para editar prêmio -->
     <div class="modal" id="edit-premio-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Editar Prêmio</h3>
-                <button class="close-modal" id="close-edit-premio-modal">&times;</button>
-            </div>
-            <div class="form-group">
-                <label for="edit-premio-nome">Nome do Prêmio</label>
-                <input type="text" id="edit-premio-nome" placeholder="Digite o nome do prêmio">
-            </div>
-            <div class="form-group">
-                <label for="edit-premio-categoria">Categoria</label>
-                <select id="edit-premio-categoria" required>
-                    <option value="diamante">Diamante</option>
-                    <option value="ouro">Ouro</option>
-                    <option value="prata">Prata</option>
-                    <option value="bronze">Bronze</option>
-                    <option value="brinde">Brinde</option>
-                </select>
-            </div>
-            <input type="hidden" id="edit-premio-id">
-            <div class="modal-footer">
-                <button class="modal-btn cancel-btn" id="cancel-edit-premio-btn">Cancelar</button>
-                <button class="modal-btn save-btn" id="save-premio-btn">Salvar</button>
-            </div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Editar Prêmio</h3>
+          <button class="close-modal" id="close-edit-premio-modal">
+            &times;
+          </button>
         </div>
+        <div class="form-group">
+          <label for="edit-premio-nome">Nome do Prêmio</label>
+          <input
+            type="text"
+            id="edit-premio-nome"
+            placeholder="Digite o nome do prêmio"
+          />
+        </div>
+        <div class="form-group">
+          <label for="edit-premio-categoria">Categoria</label>
+          <select id="edit-premio-categoria" required>
+            <option value="diamante">Diamante</option>
+            <option value="ouro">Ouro</option>
+            <option value="prata">Prata</option>
+            <option value="bronze">Bronze</option>
+            <option value="brinde">Brinde</option>
+          </select>
+        </div>
+        <input type="hidden" id="edit-premio-id" />
+        <div class="modal-footer">
+          <button class="modal-btn cancel-btn" id="cancel-edit-premio-btn">
+            Cancelar
+          </button>
+          <button class="modal-btn save-btn" id="save-premio-btn">
+            Salvar
+          </button>
+        </div>
+      </div>
     </div>
-    
+
     <!-- Modal para editar secretaria -->
     <div class="modal" id="edit-secretaria-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Editar Secretaria/Empresa</h3>
-                <button class="close-modal" id="close-edit-secretaria-modal">&times;</button>
-            </div>
-            <div class="form-group">
-                <label for="edit-secretaria-nome">Nome da Secretaria/Empresa</label>
-                <input type="text" id="edit-secretaria-nome" placeholder="Digite o nome da secretaria ou empresa">
-                <input type="hidden" id="edit-secretaria-id">
-            </div>
-            <div class="modal-footer">
-                <button class="modal-btn cancel-btn" id="cancel-edit-secretaria-btn">Cancelar</button>
-                <button class="modal-btn save-btn" id="save-secretaria-btn">Salvar</button>
-            </div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Editar Secretaria/Empresa</h3>
+          <button class="close-modal" id="close-edit-secretaria-modal">
+            &times;
+          </button>
         </div>
+        <div class="form-group">
+          <label for="edit-secretaria-nome">Nome da Secretaria/Empresa</label>
+          <input
+            type="text"
+            id="edit-secretaria-nome"
+            placeholder="Digite o nome da secretaria ou empresa"
+          />
+          <input type="hidden" id="edit-secretaria-id" />
+        </div>
+        <div class="modal-footer">
+          <button class="modal-btn cancel-btn" id="cancel-edit-secretaria-btn">
+            Cancelar
+          </button>
+          <button class="modal-btn save-btn" id="save-secretaria-btn">
+            Salvar
+          </button>
+        </div>
+      </div>
     </div>
-    
+
     <!-- Modal de confirmação de exclusão -->
     <div class="modal" id="delete-confirm-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Confirmar Exclusão</h3>
-                <button class="close-modal" id="close-delete-modal">&times;</button>
-            </div>
-            <p id="delete-message">Tem certeza que deseja excluir este item?</p>
-            <div class="modal-footer">
-                <button class="modal-btn cancel-btn" id="cancel-delete-btn">Cancelar</button>
-                <button class="modal-btn save-btn" id="confirm-delete-btn" style="background-color: #FF5252;">Excluir</button>
-            </div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Confirmar Exclusão</h3>
+          <button class="close-modal" id="close-delete-modal">&times;</button>
         </div>
+        <p id="delete-message">Tem certeza que deseja excluir este item?</p>
+        <div class="modal-footer">
+          <button class="modal-btn cancel-btn" id="cancel-delete-btn">
+            Cancelar
+          </button>
+          <button
+            class="modal-btn save-btn"
+            id="confirm-delete-btn"
+            style="background-color: #ff5252"
+          >
+            Excluir
+          </button>
+        </div>
+      </div>
     </div>
-    
+
     <!-- Modal para editar doação -->
     <div class="modal" id="edit-doacao-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Editar Doação</h3>
-                <button class="close-modal" id="close-edit-doacao-modal">&times;</button>
-            </div>
-            <div class="form-group">
-                <label for="edit-doacao-colaborador">Colaborador</label>
-                <input type="text" id="edit-doacao-colaborador" placeholder="Nome do colaborador">
-            </div>
-            <div class="form-group">
-                <label for="edit-doacao-premio">Prêmio</label>
-                <select id="edit-doacao-premio">
-                    <!-- Opções serão carregadas dinamicamente -->
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="edit-doacao-quantidade">Quantidade</label>
-                <input type="number" id="edit-doacao-quantidade" min="1" value="1">
-            </div>
-            <div class="form-group">
-                <label for="edit-doacao-secretaria">Secretaria/Empresa</label>
-                <select id="edit-doacao-secretaria">
-                    <!-- Opções serão carregadas dinamicamente -->
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="edit-doacao-data">Data</label>
-                <input type="date" id="edit-doacao-data">
-            </div>
-            <div class="form-group">
-                <label for="edit-doacao-nota-fiscal">Nº Nota Fiscal</label>
-                <input type="text" id="edit-doacao-nota-fiscal" placeholder="Número da nota fiscal">
-            </div>
-            <input type="hidden" id="edit-doacao-id">
-            <div class="modal-footer">
-                <button class="modal-btn cancel-btn" id="cancel-edit-doacao-btn">Cancelar</button>
-                <button class="modal-btn save-btn" id="save-doacao-btn">Salvar</button>
-            </div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Editar Doação</h3>
+          <button class="close-modal" id="close-edit-doacao-modal">
+            &times;
+          </button>
         </div>
+        <div class="form-group">
+          <label for="edit-doacao-colaborador">Colaborador</label>
+          <input
+            type="text"
+            id="edit-doacao-colaborador"
+            placeholder="Nome do colaborador"
+          />
+        </div>
+        <div class="form-group">
+          <label for="edit-doacao-premio">Prêmio</label>
+          <select id="edit-doacao-premio">
+            <!-- Opções serão carregadas dinamicamente -->
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="edit-doacao-quantidade">Quantidade</label>
+          <input type="number" id="edit-doacao-quantidade" min="1" value="1" />
+        </div>
+        <div class="form-group">
+          <label for="edit-doacao-secretaria">Secretaria/Empresa</label>
+          <select id="edit-doacao-secretaria">
+            <!-- Opções serão carregadas dinamicamente -->
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="edit-doacao-data">Data</label>
+          <input type="date" id="edit-doacao-data" />
+        </div>
+        <div class="form-group">
+          <label for="edit-doacao-nota-fiscal">Nº Nota Fiscal</label>
+          <input
+            type="text"
+            id="edit-doacao-nota-fiscal"
+            placeholder="Número da nota fiscal"
+          />
+        </div>
+        <input type="hidden" id="edit-doacao-id" />
+        <div class="modal-footer">
+          <button class="modal-btn cancel-btn" id="cancel-edit-doacao-btn">
+            Cancelar
+          </button>
+          <button class="modal-btn save-btn" id="save-doacao-btn">
+            Salvar
+          </button>
+        </div>
+      </div>
     </div>
-    
-    <script type="module" src="/src/js/gerenciar-dados.js"></script>
-        
-</body>
-</html> 
+
+    <script type="module" src="../src/js/gerenciar-dados.js"></script>
+  </body>
+</html>
