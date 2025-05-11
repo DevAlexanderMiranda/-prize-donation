@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerenciar Dados - Prize Donation</title>
+    <title>Gerenciar Dados - ASM Donation</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
@@ -450,7 +450,7 @@
 <body>
     <div class="container">
         <header>
-            <h1>Prize Donation</h1>
+            <h1>ASM Donation</h1>
             <div class="user-info">
                 <div class="avatar">U</div>
                 <div class="user-dropdown">
@@ -1273,7 +1273,7 @@
                 premioId,
                 quantidade: isNaN(quantidade) ? 1 : quantidade,
                 secretariaId,
-                data: new Date(dataStr),
+                data: adjustDateForTimezone(dataStr),
                 notaFiscal
             };
             
@@ -1696,6 +1696,18 @@
                 document.body.style.opacity = '1';
             }, 100);
         });
+
+        // Função para ajustar o timezone da data
+        function adjustDateForTimezone(dateString) {
+            // Parse the date string (format: YYYY-MM-DD)
+            const parts = dateString.split('-');
+            const year = parseInt(parts[0]);
+            const month = parseInt(parts[1]) - 1; // Months are 0-indexed in JavaScript
+            const day = parseInt(parts[2]);
+            
+            // Create date with local timezone (no UTC conversion)
+            return new Date(year, month, day);
+        }
     </script>
 </body>
 </html> 
