@@ -315,12 +315,28 @@ confirmPremioBtn.addEventListener("click", async () => {
   const novoPremio = novoPremioInput.value.trim();
   const categoria = document.getElementById("novo-premio-categoria").value;
   if (novoPremio && categoria) {
-    const sucesso = await adicionarPremio(novoPremio, categoria);
-    if (sucesso) {
-      premioModal.style.display = "none";
-      showToast("Prêmio adicionado com sucesso!");
-    } else {
-      alert("Erro ao adicionar prêmio. Tente novamente.");
+    // Adicionar estado de loading ao botão
+    const originalBtnText = confirmPremioBtn.innerHTML;
+    confirmPremioBtn.innerHTML =
+      '<i class="fas fa-spinner fa-spin"></i> Adicionando...';
+    confirmPremioBtn.disabled = true;
+    confirmPremioBtn.style.opacity = "0.7";
+    confirmPremioBtn.style.cursor = "not-allowed";
+
+    try {
+      const sucesso = await adicionarPremio(novoPremio, categoria);
+      if (sucesso) {
+        premioModal.style.display = "none";
+        showToast("Prêmio adicionado com sucesso!");
+      } else {
+        alert("Erro ao adicionar prêmio. Tente novamente.");
+      }
+    } finally {
+      // Restaurar o botão independentemente do resultado
+      confirmPremioBtn.innerHTML = originalBtnText;
+      confirmPremioBtn.disabled = false;
+      confirmPremioBtn.style.opacity = "1";
+      confirmPremioBtn.style.cursor = "pointer";
     }
   } else {
     alert("Por favor, preencha todos os campos.");
@@ -330,12 +346,28 @@ confirmPremioBtn.addEventListener("click", async () => {
 confirmSecretariaBtn.addEventListener("click", async () => {
   const novaSecretaria = novaSecretariaInput.value.trim();
   if (novaSecretaria) {
-    const sucesso = await adicionarSecretaria(novaSecretaria);
-    if (sucesso) {
-      secretariaModal.style.display = "none";
-      showToast("Secretaria/Empresa adicionada com sucesso!");
-    } else {
-      alert("Erro ao adicionar secretaria/empresa. Tente novamente.");
+    // Adicionar estado de loading ao botão
+    const originalBtnText = confirmSecretariaBtn.innerHTML;
+    confirmSecretariaBtn.innerHTML =
+      '<i class="fas fa-spinner fa-spin"></i> Adicionando...';
+    confirmSecretariaBtn.disabled = true;
+    confirmSecretariaBtn.style.opacity = "0.7";
+    confirmSecretariaBtn.style.cursor = "not-allowed";
+
+    try {
+      const sucesso = await adicionarSecretaria(novaSecretaria);
+      if (sucesso) {
+        secretariaModal.style.display = "none";
+        showToast("Secretaria/Empresa adicionada com sucesso!");
+      } else {
+        alert("Erro ao adicionar secretaria/empresa. Tente novamente.");
+      }
+    } finally {
+      // Restaurar o botão independentemente do resultado
+      confirmSecretariaBtn.innerHTML = originalBtnText;
+      confirmSecretariaBtn.disabled = false;
+      confirmSecretariaBtn.style.opacity = "1";
+      confirmSecretariaBtn.style.cursor = "pointer";
     }
   } else {
     alert("Por favor, digite o nome da secretaria/empresa.");
@@ -371,11 +403,15 @@ async function setupAutocomplete() {
 }
 
 // Verificar se o formulário tem os IDs necessários antes de enviar
-document.getElementById("premio-form").addEventListener("submit", function (e) {
+document.getElementById("premio-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  // Obter o botão de submit e desabilitar para evitar múltiplos envios
+  const submitBtn = e.target.querySelector(".submit-btn");
+  const originalBtnText = submitBtn.innerHTML;
+
   // Se estiver vazio, mas o usuário digitou algo no campo, criar novo item
   if (!premioIdInput.value && premioInput.value.trim()) {
-    e.preventDefault();
-
     // Verificar se já existe um prêmio com esse nome
     const existingPremio = premiosData.find(
       (p) => p.nome.toLowerCase() === premioInput.value.trim().toLowerCase()
@@ -386,13 +422,18 @@ document.getElementById("premio-form").addEventListener("submit", function (e) {
       // Abrir modal para criar novo prêmio
       novoPremioInput.value = premioInput.value;
       premioModal.style.display = "flex";
+
+      // Restaurar o botão
+      submitBtn.innerHTML = originalBtnText;
+      submitBtn.disabled = false;
+      submitBtn.style.opacity = "1";
+      submitBtn.style.cursor = "pointer";
+
       return;
     }
   }
 
   if (!secretariaIdInput.value && secretariaInput.value.trim()) {
-    e.preventDefault();
-
     // Verificar se já existe uma secretaria com esse nome
     const existingSecretaria = secretariasData.find(
       (s) => s.nome.toLowerCase() === secretariaInput.value.trim().toLowerCase()
@@ -403,88 +444,88 @@ document.getElementById("premio-form").addEventListener("submit", function (e) {
       // Abrir modal para criar nova secretaria
       novaSecretariaInput.value = secretariaInput.value;
       secretariaModal.style.display = "flex";
+
+      // Restaurar o botão
+      submitBtn.innerHTML = originalBtnText;
+      submitBtn.disabled = false;
+      submitBtn.style.opacity = "1";
+      submitBtn.style.cursor = "pointer";
+
       return;
     }
   }
-});
 
-// Inicialização
-document.addEventListener("DOMContentLoaded", function () {
-  setupAutocomplete();
+  // Alterar o texto do botão e desabilitar
+  submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Cadastrando...';
+  submitBtn.disabled = true;
+  submitBtn.style.opacity = "0.7";
+  submitBtn.style.cursor = "not-allowed";
 
-  // Fechar modal ao clicar fora
-  window.addEventListener("click", (event) => {
-    if (event.target === premioModal) {
-      premioModal.style.display = "none";
+  const colaborador = document.getElementById("colaborador").value;
+  const premioId = document.getElementById("premio_id").value;
+  const quantidade = parseInt(document.getElementById("quantidade").value);
+  const secretariaId = document.getElementById("secretaria_id").value;
+  const data = document.getElementById("data").value;
+  const notaFiscal = document.getElementById("nota-fiscal").value;
+  const observacoes = document.getElementById("observacoes").value;
+
+  // Verificar se os IDs necessários estão presentes
+  if (!premioId || !secretariaId) {
+    alert("Por favor, selecione um prêmio e uma secretaria/empresa válidos.");
+
+    // Restaurar o botão
+    submitBtn.innerHTML = originalBtnText;
+    submitBtn.disabled = false;
+    submitBtn.style.opacity = "1";
+    submitBtn.style.cursor = "pointer";
+
+    return;
+  }
+
+  try {
+    // Buscar o nome do prêmio e da secretaria selecionados
+    const premioDoc = await getDoc(doc(db, "premios", premioId));
+    const secretariaDoc = await getDoc(doc(db, "secretarias", secretariaId));
+
+    if (!premioDoc.exists() || !secretariaDoc.exists()) {
+      throw new Error("Prêmio ou secretaria não encontrados");
     }
-    if (event.target === secretariaModal) {
-      secretariaModal.style.display = "none";
-    }
-  });
 
-  // Event listener para o formulário de cadastro de prêmio
-  document
-    .getElementById("premio-form")
-    .addEventListener("submit", async (e) => {
-      e.preventDefault();
+    const premio = premioDoc.data();
+    const secretaria = secretariaDoc.data();
 
-      const colaborador = document.getElementById("colaborador").value;
-      const premioId = document.getElementById("premio_id").value;
-      const quantidade = parseInt(document.getElementById("quantidade").value);
-      const secretariaId = document.getElementById("secretaria_id").value;
-      const data = document.getElementById("data").value;
-      const notaFiscal = document.getElementById("nota-fiscal").value;
-      const observacoes = document.getElementById("observacoes").value;
-
-      // Verificar se os IDs necessários estão presentes
-      if (!premioId || !secretariaId) {
-        alert(
-          "Por favor, selecione um prêmio e uma secretaria/empresa válidos."
-        );
-        return;
-      }
-
-      try {
-        // Buscar o nome do prêmio e da secretaria selecionados
-        const premioDoc = await getDoc(doc(db, "premios", premioId));
-        const secretariaDoc = await getDoc(
-          doc(db, "secretarias", secretariaId)
-        );
-
-        if (!premioDoc.exists() || !secretariaDoc.exists()) {
-          throw new Error("Prêmio ou secretaria não encontrados");
-        }
-
-        const premio = premioDoc.data();
-        const secretaria = secretariaDoc.data();
-
-        // Adicionar doação ao Firestore
-        await addDoc(collection(db, "doacoes"), {
-          colaborador,
-          premioId,
-          premioNome: premio.nome,
-          quantidade,
-          secretariaId,
-          secretariaNome: secretaria.nome,
-          data: new Date(data),
-          notaFiscal,
-          observacoes,
-          dataCadastro: new Date(),
-          categoria: premio.categoria || "Não especificada",
-        });
-
-        // Limpar formulário
-        e.target.reset();
-        premioIdInput.value = "";
-        secretariaIdInput.value = "";
-
-        // Mostrar mensagem de sucesso
-        showToast("Prêmio cadastrado com sucesso!");
-      } catch (error) {
-        console.error("Erro ao cadastrar prêmio:", error);
-        alert("Erro ao cadastrar prêmio. Tente novamente.");
-      }
+    // Adicionar doação ao Firestore
+    await addDoc(collection(db, "doacoes"), {
+      colaborador,
+      premioId,
+      premioNome: premio.nome,
+      quantidade,
+      secretariaId,
+      secretariaNome: secretaria.nome,
+      data: new Date(data),
+      notaFiscal,
+      observacoes,
+      dataCadastro: new Date(),
+      categoria: premio.categoria || "Não especificada",
     });
+
+    // Limpar formulário
+    e.target.reset();
+    premioIdInput.value = "";
+    secretariaIdInput.value = "";
+
+    // Mostrar mensagem de sucesso
+    showToast("Prêmio cadastrado com sucesso!");
+  } catch (error) {
+    console.error("Erro ao cadastrar prêmio:", error);
+    alert("Erro ao cadastrar prêmio. Tente novamente.");
+  } finally {
+    // Restaurar o botão independentemente do resultado
+    submitBtn.innerHTML = originalBtnText;
+    submitBtn.disabled = false;
+    submitBtn.style.opacity = "1";
+    submitBtn.style.cursor = "pointer";
+  }
 });
 
 // Função para verificar permissões do usuário
@@ -791,16 +832,17 @@ applyUserSessionData();
 
 // Adicionar efeito de fade-in ao carregar a página
 document.addEventListener("DOMContentLoaded", function () {
-  // Aplicar dados do usuário novamente para garantir
-  applyUserSessionData();
+  setupAutocomplete();
 
-  // Definir opacidade inicial para 0 e depois animar para 1
-  document.body.style.opacity = "0";
-  document.body.style.transition = "opacity 0.5s ease-in";
-
-  setTimeout(() => {
-    document.body.style.opacity = "1";
-  }, 100);
+  // Fechar modal ao clicar fora
+  window.addEventListener("click", (event) => {
+    if (event.target === premioModal) {
+      premioModal.style.display = "none";
+    }
+    if (event.target === secretariaModal) {
+      secretariaModal.style.display = "none";
+    }
+  });
 });
 
 // Dropdown functionality

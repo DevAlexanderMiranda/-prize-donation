@@ -68,9 +68,47 @@ const editDoacaoId = document.getElementById("edit-doacao-id");
 // Variável global para armazenar o item a ser excluído
 let deleteItemData = null;
 
+// Função para mostrar loading
+function showLoading(tableBody) {
+  tableBody.innerHTML = `
+        <tr>
+            <td colspan="6" style="border-bottom: none;">
+                <div class="loading-container">
+                    <div>
+                        <div class="loading-spinner"></div>
+                        <div class="loading-text">Carregando dados...</div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    `;
+}
+
+// Mostrar loading em todas as tabelas imediatamente ao carregar a página
+document.addEventListener("DOMContentLoaded", function () {
+  // Mostrar loading em todas as tabelas
+  if (premiosTableBody) showLoading(premiosTableBody);
+  if (secretariasTableBody) showLoading(secretariasTableBody);
+  if (doacoesTableBody) showLoading(doacoesTableBody);
+
+  // Definir opacidade inicial para 0 e depois animar para 1
+  document.body.style.opacity = "0";
+  document.body.style.transition = "opacity 0.5s ease-in";
+
+  setTimeout(() => {
+    document.body.style.opacity = "1";
+  }, 100);
+
+  // Aplicar dados do usuário da sessão se disponíveis
+  applyUserSessionData();
+});
+
 // Carregar prêmios
 async function carregarPremios() {
   try {
+    // Mostrar loading
+    showLoading(premiosTableBody);
+
     const premiosQuery = query(collection(db, "premios"), orderBy("nome"));
     const querySnapshot = await getDocs(premiosQuery);
 
@@ -78,7 +116,7 @@ async function carregarPremios() {
 
     if (querySnapshot.empty) {
       premiosTableBody.innerHTML =
-        '<tr><td colspan="3" style="text-align: center;">Nenhum prêmio cadastrado</td></tr>';
+        '<tr><td colspan="4" style="text-align: center;">Nenhum prêmio cadastrado</td></tr>';
       return;
     }
 
@@ -132,13 +170,16 @@ async function carregarPremios() {
   } catch (error) {
     console.error("Erro ao carregar prêmios:", error);
     premiosTableBody.innerHTML =
-      '<tr><td colspan="3" style="text-align: center;">Erro ao carregar prêmios</td></tr>';
+      '<tr><td colspan="4" style="text-align: center;">Erro ao carregar prêmios</td></tr>';
   }
 }
 
 // Carregar secretarias
 async function carregarSecretarias() {
   try {
+    // Mostrar loading
+    showLoading(secretariasTableBody);
+
     const secretariasQuery = query(
       collection(db, "secretarias"),
       orderBy("nome")
@@ -198,6 +239,9 @@ async function carregarSecretarias() {
 // Carregar doações
 async function carregarDoacoes() {
   try {
+    // Mostrar loading
+    showLoading(doacoesTableBody);
+
     const doacoesQuery = query(
       collection(db, "doacoes"),
       orderBy("dataCadastro", "desc")
@@ -208,7 +252,7 @@ async function carregarDoacoes() {
 
     if (querySnapshot.empty) {
       doacoesTableBody.innerHTML =
-        '<tr><td colspan="7" style="text-align: center;">Nenhuma doação cadastrada</td></tr>';
+        '<tr><td colspan="6" style="text-align: center;">Nenhuma doação cadastrada</td></tr>';
       return;
     }
 
@@ -258,7 +302,7 @@ async function carregarDoacoes() {
   } catch (error) {
     console.error("Erro ao carregar doações:", error);
     doacoesTableBody.innerHTML =
-      '<tr><td colspan="7" style="text-align: center;">Erro ao carregar doações</td></tr>';
+      '<tr><td colspan="6" style="text-align: center;">Erro ao carregar doações</td></tr>';
   }
 }
 
@@ -412,6 +456,33 @@ async function carregarSelects() {
   }
 }
 
+// Função para mostrar toast notification
+function showToast(message, duration = 3000) {
+  const toastContainer = document.getElementById("toast-container");
+  const toast = document.createElement("div");
+  toast.className = "toast";
+  toast.innerHTML = `
+        <i class="fas fa-check-circle"></i>
+        <div class="toast-message">${message}</div>
+    `;
+
+  toastContainer.appendChild(toast);
+
+  // Trigger reflow to enable animation
+  toast.offsetHeight;
+
+  // Show toast
+  toast.classList.add("show");
+
+  // Remove toast after duration
+  setTimeout(() => {
+    toast.classList.remove("show");
+    setTimeout(() => {
+      toastContainer.removeChild(toast);
+    }, 300);
+  }, duration);
+}
+
 // Função para atualizar prêmio
 async function atualizarPremio(id, novoNome, novaCategoria) {
   try {
@@ -440,8 +511,10 @@ async function atualizarPremio(id, novoNome, novaCategoria) {
       await Promise.all(atualizacoes);
     }
 
-    alert(`Prêmio atualizado com sucesso!`);
-    editPremioModal.style.display = "none";
+    // Substituir alert por toast
+    showToast("Prêmio atualizado com sucesso!");
+
+    // Não fechamos o modal aqui, isso será feito após a restauração do botão
     carregarPremios();
     carregarDoacoes(); // Recarregar as doações para refletir os nomes atualizados
   } catch (error) {
@@ -477,8 +550,10 @@ async function atualizarSecretaria(id, novoNome) {
       await Promise.all(atualizacoes);
     }
 
-    alert(`Secretaria/Empresa atualizada com sucesso!`);
-    editSecretariaModal.style.display = "none";
+    // Substituir alert por toast
+    showToast("Secretaria/Empresa atualizada com sucesso!");
+
+    // Não fechamos o modal aqui, isso será feito após a restauração do botão
     carregarSecretarias();
     carregarDoacoes(); // Recarregar as doações para refletir os nomes atualizados
   } catch (error) {
@@ -515,8 +590,10 @@ async function atualizarDoacao(id, dadosAtualizados) {
 
     await updateDoc(doacaoRef, dadosCompletos);
 
-    alert(`Doação atualizada com sucesso!`);
-    editDoacaoModal.style.display = "none";
+    // Substituir alert por toast
+    showToast("Doação atualizada com sucesso!");
+
+    // Não fechamos o modal aqui, isso será feito após a restauração do botão
     carregarDoacoes();
   } catch (error) {
     console.error("Erro ao atualizar doação:", error);
@@ -529,19 +606,22 @@ async function excluirItem(id, type) {
   try {
     if (type === "premio") {
       await deleteDoc(doc(db, "premios", id));
-      alert("Prêmio excluído com sucesso!");
+      // Substituir alert por toast
+      showToast("Prêmio excluído com sucesso!");
       carregarPremios();
     } else if (type === "secretaria") {
       await deleteDoc(doc(db, "secretarias", id));
-      alert("Secretaria/Empresa excluída com sucesso!");
+      // Substituir alert por toast
+      showToast("Secretaria/Empresa excluída com sucesso!");
       carregarSecretarias();
     } else if (type === "doacao") {
       await deleteDoc(doc(db, "doacoes", id));
-      alert("Doação excluída com sucesso!");
+      // Substituir alert por toast
+      showToast("Doação excluída com sucesso!");
       carregarDoacoes();
     }
 
-    deleteConfirmModal.style.display = "none";
+    // Não fechamos o modal aqui, isso será feito após a restauração do botão
   } catch (error) {
     console.error("Erro ao excluir item:", error);
     alert("Erro ao excluir item. Tente novamente.");
@@ -618,7 +698,27 @@ document
     ).value;
 
     if (novoNome) {
-      await atualizarPremio(id, novoNome, novaCategoria);
+      // Adicionar estado de loading ao botão
+      const savePremioBtn = document.getElementById("save-premio-btn");
+      const originalBtnText = savePremioBtn.innerHTML;
+      savePremioBtn.innerHTML =
+        '<i class="fas fa-spinner fa-spin"></i> Salvando...';
+      savePremioBtn.disabled = true;
+      savePremioBtn.style.opacity = "0.7";
+      savePremioBtn.style.cursor = "not-allowed";
+
+      try {
+        await atualizarPremio(id, novoNome, novaCategoria);
+      } finally {
+        // Restaurar o botão independentemente do resultado
+        savePremioBtn.innerHTML = originalBtnText;
+        savePremioBtn.disabled = false;
+        savePremioBtn.style.opacity = "1";
+        savePremioBtn.style.cursor = "pointer";
+
+        // Fechar o modal após a operação
+        editPremioModal.style.display = "none";
+      }
     } else {
       alert("Por favor, digite o nome do prêmio.");
     }
@@ -643,7 +743,27 @@ document
     const novoNome = editSecretariaNome.value.trim();
 
     if (novoNome) {
-      await atualizarSecretaria(id, novoNome);
+      // Adicionar estado de loading ao botão
+      const saveSecretariaBtn = document.getElementById("save-secretaria-btn");
+      const originalBtnText = saveSecretariaBtn.innerHTML;
+      saveSecretariaBtn.innerHTML =
+        '<i class="fas fa-spinner fa-spin"></i> Salvando...';
+      saveSecretariaBtn.disabled = true;
+      saveSecretariaBtn.style.opacity = "0.7";
+      saveSecretariaBtn.style.cursor = "not-allowed";
+
+      try {
+        await atualizarSecretaria(id, novoNome);
+      } finally {
+        // Restaurar o botão independentemente do resultado
+        saveSecretariaBtn.innerHTML = originalBtnText;
+        saveSecretariaBtn.disabled = false;
+        saveSecretariaBtn.style.opacity = "1";
+        saveSecretariaBtn.style.cursor = "pointer";
+
+        // Fechar o modal após a operação
+        editSecretariaModal.style.display = "none";
+      }
     } else {
       alert("Por favor, digite o nome da secretaria/empresa.");
     }
@@ -661,7 +781,27 @@ document
   .getElementById("confirm-delete-btn")
   .addEventListener("click", async () => {
     if (deleteItemData) {
-      await excluirItem(deleteItemData.id, deleteItemData.type);
+      // Adicionar estado de loading ao botão
+      const confirmDeleteBtn = document.getElementById("confirm-delete-btn");
+      const originalBtnText = confirmDeleteBtn.innerHTML;
+      confirmDeleteBtn.innerHTML =
+        '<i class="fas fa-spinner fa-spin"></i> Excluindo...';
+      confirmDeleteBtn.disabled = true;
+      confirmDeleteBtn.style.opacity = "0.7";
+      confirmDeleteBtn.style.cursor = "not-allowed";
+
+      try {
+        await excluirItem(deleteItemData.id, deleteItemData.type);
+      } finally {
+        // Restaurar o botão independentemente do resultado
+        confirmDeleteBtn.innerHTML = originalBtnText;
+        confirmDeleteBtn.disabled = false;
+        confirmDeleteBtn.style.opacity = "1";
+        confirmDeleteBtn.style.cursor = "pointer";
+
+        // Fechar o modal após a operação
+        deleteConfirmModal.style.display = "none";
+      }
     }
   });
 
@@ -693,6 +833,15 @@ document
       return;
     }
 
+    // Adicionar estado de loading ao botão
+    const saveDoacaoBtn = document.getElementById("save-doacao-btn");
+    const originalBtnText = saveDoacaoBtn.innerHTML;
+    saveDoacaoBtn.innerHTML =
+      '<i class="fas fa-spinner fa-spin"></i> Salvando...';
+    saveDoacaoBtn.disabled = true;
+    saveDoacaoBtn.style.opacity = "0.7";
+    saveDoacaoBtn.style.cursor = "not-allowed";
+
     const dadosAtualizados = {
       colaborador,
       premioId,
@@ -702,7 +851,18 @@ document
       notaFiscal,
     };
 
-    await atualizarDoacao(id, dadosAtualizados);
+    try {
+      await atualizarDoacao(id, dadosAtualizados);
+    } finally {
+      // Restaurar o botão independentemente do resultado
+      saveDoacaoBtn.innerHTML = originalBtnText;
+      saveDoacaoBtn.disabled = false;
+      saveDoacaoBtn.style.opacity = "1";
+      saveDoacaoBtn.style.cursor = "pointer";
+
+      // Fechar o modal após a operação
+      editDoacaoModal.style.display = "none";
+    }
   });
 
 // Fechar modais ao clicar fora
@@ -1050,9 +1210,6 @@ document.addEventListener("DOMContentLoaded", function () {
       window.location.href = pageName;
     });
   });
-
-  // Aplicar dados do usuário da sessão se disponíveis
-  applyUserSessionData();
 });
 
 // Função para mostrar overlay de carregamento com efeito de fade
@@ -1112,20 +1269,6 @@ function applyUserSessionData() {
     document.querySelector(".avatar").textContent = userInitial;
   }
 }
-
-// Executar assim que o DOM estiver pronto para exibir os dados do usuário de imediato
-applyUserSessionData();
-
-// Adicionar efeito de fade-in ao carregar a página
-document.addEventListener("DOMContentLoaded", function () {
-  // Definir opacidade inicial para 0 e depois animar para 1
-  document.body.style.opacity = "0";
-  document.body.style.transition = "opacity 0.5s ease-in";
-
-  setTimeout(() => {
-    document.body.style.opacity = "1";
-  }, 100);
-});
 
 // Função para ajustar o timezone da data
 function adjustDateForTimezone(dateString) {
