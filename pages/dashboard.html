@@ -76,6 +76,9 @@
         <button class="nav-tab" data-section="top-premios">
           <i class="fas fa-award"></i> Top 5 Prêmios Mais Doados
         </button>
+        <button class="nav-tab" data-section="colaboradores">
+          <i class="fas fa-user-friends"></i> Colaboradores
+        </button>
       </div>
 
       <!-- Seção de Lista de Prêmios -->
@@ -151,8 +154,51 @@
           </div>
         </div>
       </div>
+
+      <!-- Seção de Colaboradores -->
+      <div class="dashboard-section" id="section-colaboradores">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Lista de Colaboradores</div>
+            <div class="card-icon"><i class="fas fa-user-friends"></i></div>
+          </div>
+
+          <div class="search-container">
+            <input
+              type="text"
+              id="pesquisa-colaborador"
+              placeholder="Pesquisar por colaborador ou prêmio..."
+            />
+            <button id="btn-pesquisar-colaborador" class="search-btn">
+              <i class="fas fa-search"></i>
+            </button>
+            <button id="btn-limpar-pesquisa-colaborador" class="clear-btn">
+              Limpar
+            </button>
+          </div>
+
+          <div class="table-responsive">
+            <table class="data-table" id="lista-colaboradores-table">
+              <thead>
+                <tr>
+                  <th>Colaborador</th>
+                  <th>Prêmio Doado</th>
+                  <th>Quantidade</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Dados serão carregados dinamicamente -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <script type="module" src="../src/js/dashboard.js"></script>
+    <footer class="footer">
+      &copy; 2025 - Todos os direitos reservados a Alexander S. Miranda - SEFIN
+    </footer>
+
+    <script type="module" src="/src/js/dashboard.js"></script>
   </body>
 </html>

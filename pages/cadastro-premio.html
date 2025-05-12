@@ -81,13 +81,19 @@
             <div class="col">
               <div class="form-group">
                 <label for="premio">Prêmio</label>
-                <div class="select-container">
-                  <select id="premio" name="premio" required>
-                    <option value="" disabled selected>
-                      Selecione um prêmio
-                    </option>
-                    <!-- Opções serão carregadas dinamicamente -->
-                  </select>
+                <div class="autocomplete-container">
+                  <input
+                    type="text"
+                    id="premio"
+                    name="premio"
+                    placeholder="Digite para buscar ou adicionar um prêmio"
+                    required
+                  />
+                  <input type="hidden" id="premio_id" name="premio_id" />
+                  <div
+                    class="autocomplete-items"
+                    id="premio-autocomplete-list"
+                  ></div>
                   <button
                     type="button"
                     class="add-option-btn"
@@ -117,13 +123,19 @@
 
           <div class="form-group">
             <label for="secretaria">Secretaria/Empresa</label>
-            <div class="select-container">
-              <select id="secretaria" name="secretaria" required>
-                <option value="" disabled selected>
-                  Selecione uma secretaria/empresa
-                </option>
-                <!-- Opções serão carregadas dinamicamente -->
-              </select>
+            <div class="autocomplete-container">
+              <input
+                type="text"
+                id="secretaria"
+                name="secretaria"
+                placeholder="Digite para buscar ou adicionar uma secretaria/empresa"
+                required
+              />
+              <input type="hidden" id="secretaria_id" name="secretaria_id" />
+              <div
+                class="autocomplete-items"
+                id="secretaria-autocomplete-list"
+              ></div>
               <button
                 type="button"
                 class="add-option-btn"
@@ -140,9 +152,7 @@
               <div class="form-group">
                 <label for="data">Data</label>
                 <input type="date" id="data" name="data" required />
-                <small style="display: block; color: #666; margin-top: 5px"
-                  >Selecione a data da doação</small
-                >
+                <small>Selecione a data da doação</small>
               </div>
             </div>
 
@@ -239,6 +249,10 @@
       </div>
     </div>
 
-    <script type="module" src="../src/js/cadastro-premio.js"></script>
+    <footer class="footer">
+      &copy; 2025 - Todos os direitos reservados a Alexander S. Miranda - SEFIN
+    </footer>
+
+    <script type="module" src="/src/js/cadastro-premio.js"></script>
   </body>
 </html>

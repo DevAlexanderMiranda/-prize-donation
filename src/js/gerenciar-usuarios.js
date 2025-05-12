@@ -3,7 +3,7 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   updatePassword,
-  deleteUser
+  deleteUser,
 } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-auth.js";
 import {
   getFirestore,
@@ -14,7 +14,7 @@ import {
   updateDoc,
   deleteDoc,
   query,
-  where
+  where,
 } from "https://www.gstatic.com/firebasejs/11.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -33,12 +33,12 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 // Elementos do DOM
-const usersTableBody = document.getElementById('usersTableBody');
-const addUserBtn = document.getElementById('addUserBtn');
-const userModal = document.getElementById('userModal');
-const userForm = document.getElementById('userForm');
-const modalTitle = document.getElementById('modalTitle');
-const closeBtn = document.querySelector('.close');
+const usersTableBody = document.getElementById("usersTableBody");
+const addUserBtn = document.getElementById("addUserBtn");
+const userModal = document.getElementById("userModal");
+const userForm = document.getElementById("userForm");
+const modalTitle = document.getElementById("modalTitle");
+const closeBtn = document.querySelector(".close");
 
 let editingUserId = null;
 
@@ -46,12 +46,12 @@ let editingUserId = null;
 async function loadUsers() {
   try {
     const usersSnapshot = await getDocs(collection(db, "users"));
-    usersTableBody.innerHTML = '';
-    
+    usersTableBody.innerHTML = "";
+
     usersSnapshot.forEach((doc) => {
       const user = doc.data();
-      const row = document.createElement('tr');
-      
+      const row = document.createElement("tr");
+
       row.innerHTML = `
         <td>${user.nome}</td>
         <td>${user.email}</td>
@@ -66,19 +66,18 @@ async function loadUsers() {
           </button>
         </td>
       `;
-      
+
       usersTableBody.appendChild(row);
     });
 
     // Adicionar event listeners para os botões
-    document.querySelectorAll('.btn-edit').forEach(btn => {
-      btn.addEventListener('click', () => editUser(btn.dataset.id));
+    document.querySelectorAll(".btn-edit").forEach((btn) => {
+      btn.addEventListener("click", () => editUser(btn.dataset.id));
     });
 
-    document.querySelectorAll('.btn-delete').forEach(btn => {
-      btn.addEventListener('click', () => deleteUser(btn.dataset.id));
+    document.querySelectorAll(".btn-delete").forEach((btn) => {
+      btn.addEventListener("click", () => deleteUser(btn.dataset.id));
     });
-
   } catch (error) {
     console.error("Erro ao carregar usuários:", error);
     alert("Erro ao carregar usuários. Por favor, tente novamente.");
@@ -88,9 +87,9 @@ async function loadUsers() {
 // Função para traduzir roles
 function translateRole(role) {
   const roles = {
-    'admin': 'Administrador',
-    'editor': 'Editor',
-    'reader': 'Leitor'
+    admin: "Administrador",
+    editor: "Editor",
+    reader: "Leitor",
   };
   return roles[role] || role;
 }
@@ -98,8 +97,8 @@ function translateRole(role) {
 // Função para traduzir status
 function translateStatus(status) {
   const statuses = {
-    'active': 'Ativo',
-    'inactive': 'Inativo'
+    active: "Ativo",
+    inactive: "Inativo",
   };
   return statuses[status] || status;
 }
@@ -107,24 +106,24 @@ function translateStatus(status) {
 // Função para abrir o modal
 function openModal(user = null) {
   editingUserId = user ? user.id : null;
-  modalTitle.textContent = user ? 'Editar Usuário' : 'Novo Usuário';
-  
+  modalTitle.textContent = user ? "Editar Usuário" : "Novo Usuário";
+
   if (user) {
-    document.getElementById('userName').value = user.nome;
-    document.getElementById('userEmail').value = user.email;
-    document.getElementById('userRole').value = user.role;
-    document.getElementById('userStatus').value = user.status;
-    document.getElementById('userPassword').value = '';
+    document.getElementById("userName").value = user.nome;
+    document.getElementById("userEmail").value = user.email;
+    document.getElementById("userRole").value = user.role;
+    document.getElementById("userStatus").value = user.status;
+    document.getElementById("userPassword").value = "";
   } else {
     userForm.reset();
   }
-  
-  userModal.style.display = 'block';
+
+  userModal.style.display = "block";
 }
 
 // Função para fechar o modal
 function closeModal() {
-  userModal.style.display = 'none';
+  userModal.style.display = "none";
   userForm.reset();
   editingUserId = null;
 }
@@ -132,46 +131,54 @@ function closeModal() {
 // Função para salvar usuário
 async function saveUser(event) {
   event.preventDefault();
-  
+
   const userData = {
-    nome: document.getElementById('userName').value,
-    email: document.getElementById('userEmail').value,
-    role: document.getElementById('userRole').value,
-    status: document.getElementById('userStatus').value,
-    dataCadastro: new Date()
+    nome: document.getElementById("userName").value,
+    email: document.getElementById("userEmail").value,
+    role: document.getElementById("userRole").value,
+    status: document.getElementById("userStatus").value,
+    dataCadastro: new Date(),
   };
 
   try {
     if (editingUserId) {
       // Atualizar usuário existente
       await updateDoc(doc(db, "users", editingUserId), userData);
-      
+
       // Se uma nova senha foi fornecida, atualizar
-      const newPassword = document.getElementById('userPassword').value;
+      const newPassword = document.getElementById("userPassword").value;
       if (newPassword) {
         // Aqui você precisaria implementar a lógica para atualizar a senha
         // usando o Firebase Auth
       }
     } else {
       // Criar novo usuário
-      const password = document.getElementById('userPassword').value;
+      const password = document.getElementById("userPassword").value;
       if (!password) {
         throw new Error("Senha é obrigatória para novos usuários");
       }
 
       // Criar usuário no Authentication
-      const userCredential = await createUserWithEmailAndPassword(auth, userData.email, password);
-      
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        userData.email,
+        password
+      );
+
       // Adicionar dados do usuário no Firestore
       await addDoc(collection(db, "users"), {
         ...userData,
-        uid: userCredential.user.uid
+        uid: userCredential.user.uid,
       });
     }
 
     closeModal();
     loadUsers();
-    alert(editingUserId ? "Usuário atualizado com sucesso!" : "Usuário criado com sucesso!");
+    alert(
+      editingUserId
+        ? "Usuário atualizado com sucesso!"
+        : "Usuário criado com sucesso!"
+    );
   } catch (error) {
     console.error("Erro ao salvar usuário:", error);
     alert("Erro ao salvar usuário: " + error.message);
@@ -206,16 +213,16 @@ async function deleteUser(userId) {
 }
 
 // Event Listeners
-addUserBtn.addEventListener('click', () => openModal());
-closeBtn.addEventListener('click', closeModal);
-userForm.addEventListener('submit', saveUser);
+addUserBtn.addEventListener("click", () => openModal());
+closeBtn.addEventListener("click", closeModal);
+userForm.addEventListener("submit", saveUser);
 
 // Fechar modal ao clicar fora dele
-window.addEventListener('click', (event) => {
+window.addEventListener("click", (event) => {
   if (event.target === userModal) {
     closeModal();
   }
 });
 
 // Carregar usuários ao iniciar
-loadUsers(); 
+loadUsers();

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciar Usuários - ASM Donation</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../src/assets/gerenciar-usuarios.css">
+    <link rel="stylesheet" href="/src/assets/gerenciar-usuarios.css">
 </head>
 <body>
     <div class="toast-container" id="toast-container"></div>
@@ -50,20 +50,22 @@
             </button>
         </div>
         
-        <table class="users-table">
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>Email</th>
-                    <th>Permissão</th>
-                    <th>Status</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody id="users-table-body">
-                <!-- Dados serão carregados dinamicamente -->
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="users-table">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Email</th>
+                        <th>Permissão</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="users-table-body">
+                    <!-- Dados serão carregados dinamicamente -->
+                </tbody>
+            </table>
+        </div>
     </div>
     
     <!-- Modal para adicionar/editar usuário -->
@@ -110,7 +112,11 @@
         </div>
     </div>
     
-    <script type="module" src="../src/js/gerenciar-user.js"></script>
+    <footer class="footer">
+        &copy; 2025 - Todos os direitos reservados a Alexander S. Miranda - SEFIN
+    </footer>
+    
+    <script type="module" src="/src/js/gerenciar-user.js"></script>
         
     </script>
 </body>
