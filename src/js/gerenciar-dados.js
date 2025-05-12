@@ -421,9 +421,29 @@ async function atualizarPremio(id, novoNome, novaCategoria) {
       categoria: novaCategoria,
     });
 
+    // Buscar e atualizar todas as doações que usam este prêmio
+    const doacoesQuery = query(
+      collection(db, "doacoes"),
+      where("premioId", "==", id)
+    );
+    const doacoesSnapshot = await getDocs(doacoesQuery);
+
+    const atualizacoes = doacoesSnapshot.docs.map((doacaoDoc) => {
+      const doacaoRef = doc(db, "doacoes", doacaoDoc.id);
+      return updateDoc(doacaoRef, {
+        premioNome: novoNome,
+      });
+    });
+
+    // Executar todas as atualizações em paralelo
+    if (atualizacoes.length > 0) {
+      await Promise.all(atualizacoes);
+    }
+
     alert(`Prêmio atualizado com sucesso!`);
     editPremioModal.style.display = "none";
     carregarPremios();
+    carregarDoacoes(); // Recarregar as doações para refletir os nomes atualizados
   } catch (error) {
     console.error("Erro ao atualizar prêmio:", error);
     alert("Erro ao atualizar prêmio. Tente novamente.");
@@ -438,9 +458,29 @@ async function atualizarSecretaria(id, novoNome) {
       nome: novoNome,
     });
 
+    // Buscar e atualizar todas as doações que usam esta secretaria
+    const doacoesQuery = query(
+      collection(db, "doacoes"),
+      where("secretariaId", "==", id)
+    );
+    const doacoesSnapshot = await getDocs(doacoesQuery);
+
+    const atualizacoes = doacoesSnapshot.docs.map((doacaoDoc) => {
+      const doacaoRef = doc(db, "doacoes", doacaoDoc.id);
+      return updateDoc(doacaoRef, {
+        secretariaNome: novoNome,
+      });
+    });
+
+    // Executar todas as atualizações em paralelo
+    if (atualizacoes.length > 0) {
+      await Promise.all(atualizacoes);
+    }
+
     alert(`Secretaria/Empresa atualizada com sucesso!`);
     editSecretariaModal.style.display = "none";
     carregarSecretarias();
+    carregarDoacoes(); // Recarregar as doações para refletir os nomes atualizados
   } catch (error) {
     console.error("Erro ao atualizar secretaria:", error);
     alert("Erro ao atualizar secretaria/empresa. Tente novamente.");
